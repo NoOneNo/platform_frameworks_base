@@ -245,9 +245,10 @@ int svcmgr_handler(struct binder_state *bs,
 
 int main(int argc, char **argv)
 {
-    struct binder_state *bs;
+    struct binder_state *bs; 
     void *svcmgr = BINDER_SERVICE_MANAGER;
 
+    // binder_state: fd, map, mapsize, 128KB
     bs = binder_open(128*1024);
 
     if (binder_become_context_manager(bs)) {
@@ -255,6 +256,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
+    // BINDER_SERVICE_MANAGER == 0, 0号句柄
     svcmgr_handle = svcmgr;
     binder_loop(bs, svcmgr_handler);
     return 0;
